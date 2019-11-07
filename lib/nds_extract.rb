@@ -1,10 +1,13 @@
 # Provided, don't edit
 require 'directors_database'
+require 'pry'
 
 # A method we're giving you. This "flattens"  Arrays of Arrays so: [[1,2],
 # [3,4,5], [6]] => [1,2,3,4,5,6].
+  
 
 def flatten_a_o_a(aoa)
+  
   result = []
   i = 0
 
@@ -21,6 +24,7 @@ def flatten_a_o_a(aoa)
 end
 
 def movie_with_director_name(director_name, movie_data)
+
   { 
     :title => movie_data[:title],
     :worldwide_gross => movie_data[:worldwide_gross],
@@ -34,6 +38,19 @@ end
 # Your code after this point
 
 def movies_with_director_key(name, movies_collection)
+  
+  first_director_array = []
+  
+ row_index = 0 
+ while row_index < movies_collection.length do
+   first_director_array << movie_with_director_name(name, movies_collection[row_index])
+   row_index += 1
+ end
+ first_director_array
+  
+end
+  
+  
   # GOAL: For each Hash in an Array (movies_collection), provide a collection
   # of movies and a directors name to the movie_with_director_name method
   # and accumulate the returned Array of movies into a new Array that's
@@ -48,7 +65,6 @@ def movies_with_director_key(name, movies_collection)
   # Array of Hashes where each Hash represents a movie; however, they should all have a
   # :director_name key. This addition can be done by using the provided
   # movie_with_director_name method
-end
 
 
 def gross_per_studio(collection)
@@ -65,7 +81,27 @@ def gross_per_studio(collection)
   # total of all the worldwide_gross numbers for every movie in the input Hash
 end
 
-def movies_with_directors_set(source)
+def movies_with_directors_set(source)  
+  
+  new_hash = {}
+  new_array = []
+    
+  row_index = 0
+  while row_index < source.length do 
+    column_index = 0 
+    while column_index < source[row_index][:movies].length
+    
+      new_hash[:title] += source[row_index][:movies][column_index][:title]
+      
+      column_index += 1 
+    end
+    
+  row_index +=1 
+  end 
+  
+ new_array
+ end
+  
   # GOAL: For each director, find their :movies Array and stick it in a new Array
   #
   # INPUT:
@@ -76,7 +112,6 @@ def movies_with_directors_set(source)
   #
   # Array of Arrays containing all of a director's movies. Each movie will need
   # to have a :director_name key added to it.
-end
 
 # ----------------    End of Your Code Region --------------------
 # Don't edit the following code! Make the methods above work with this method
