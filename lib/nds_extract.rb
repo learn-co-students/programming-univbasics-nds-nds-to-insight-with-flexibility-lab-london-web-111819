@@ -47,7 +47,7 @@ def movies_with_director_key(name, movies_collection)
    row_index += 1
  end
  first_director_array
-  
+ 
 end
   
   
@@ -67,7 +67,25 @@ end
   # movie_with_director_name method
 
 
-def gross_per_studio(collection)
+def gross_per_studio(collections)
+  hash_of_gross_per_studio = {}
+  row_index = 0 
+  
+   while row_index < collections.length do 
+    movie = collections[row_index]
+    
+      if hash_of_gross_per_studio[movie[:studio]]
+         hash_of_gross_per_studio[movie[:studio]] += movie[:worldwide_gross]
+       else 
+         
+         hash_of_gross_per_studio[movie[:studio]] = movie[:worldwide_gross]
+       end
+     
+       row_index += 1
+  end  
+  hash_of_gross_per_studio
+end
+      
   # GOAL: Given an Array of Hashes where each Hash represents a movie,
   # return a Hash that includes the total worldwide_gross of all the movies from
   # each studio.
@@ -79,26 +97,28 @@ def gross_per_studio(collection)
   #
   # Hash whose keys are the studio names and whose values are the sum
   # total of all the worldwide_gross numbers for every movie in the input Hash
-end
+
 
 def movies_with_directors_set(source)  
   
-  new_hash = {}
   new_array = []
     
   row_index = 0
   while row_index < source.length do 
     column_index = 0 
-    while column_index < source[row_index][:movies].length
+   # while column_index < source[row_index][:movies].length
     
-      new_hash[:title] += source[row_index][:movies][column_index][:title]
+     
+      new_array << movies_with_director_key(source[row_index][:name], source[row_index][:movies])
       
-      column_index += 1 
-    end
+      
+      #column_index += 1 
+    
+    #end
     
   row_index +=1 
-  end 
   
+  end 
  new_array
  end
   
@@ -118,6 +138,7 @@ def movies_with_directors_set(source)
 # call code. You'll have to "see-saw" to get this to work!
 
 def studios_totals(nds)
+  
   a_o_a_movies_with_director_names = movies_with_directors_set(nds)
   movies_with_director_names = flatten_a_o_a(a_o_a_movies_with_director_names)
   return gross_per_studio(movies_with_director_names)
